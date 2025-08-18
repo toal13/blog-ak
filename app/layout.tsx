@@ -1,3 +1,4 @@
+// app/layout.tsx
 import "./globals.css";
 import { Inter, Karla, Noto_Sans_JP } from "next/font/google";
 
@@ -23,11 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="sv"
-      className={`${inter.variable} ${karla.variable} ${noto.variable}`}
-    >
-      <body className="font-sans">{children}</body>
+    <html lang="sv">
+      {/* ここは固定でOK */}
+      <body
+        className={`${inter.variable} ${karla.variable} ${noto.variable} font-sans`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
