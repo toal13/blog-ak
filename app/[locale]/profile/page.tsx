@@ -1,16 +1,48 @@
-export default function ProfilePage() {
-  return (
-    <div className="container mx-auto py-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      {/* Profile image */}
-      <div className="bg-gray-200 aspect-square rounded-lg flex items-center justify-center">
-        Profile 写真
-      </div>
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
-      {/* Profile text */}
-      <div>
-        <h1 className="text-3xl font-bold mb-4">Your Name</h1>
-        <p className="text-base leading-relaxed text-gray-700"></p>
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ locale: "sv" | "en" | "ja" }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "profile" });
+
+  const bio: string[] = t.raw("bio");
+
+  return (
+    <main className="px-6 py-12 max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-10 items-start">
+        {/* 左：プロフィール写真 */}
+        <div className="relative w-full aspect-square overflow-hidden rounded-xl shadow border border-gray-200">
+          <Image
+            src="/sample.jpg"
+            alt={t("photoAlt")}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+
+        {/* 右：プロフィールテキスト */}
+        <div className="space-y-6">
+          <header>
+            <h1 className="text-3xl font-bold">{t("title")}</h1>
+            <p className="text-gray-600">{t("role")}</p>
+          </header>
+
+          <p className="text-lg">{t("intro")}</p>
+
+          <div className="space-y-3">
+            {bio.map((p, i) => (
+              <p key={i} className="text-gray-700 leading-relaxed">
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
