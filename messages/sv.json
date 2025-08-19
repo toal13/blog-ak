@@ -7,5 +7,33 @@
   "projects": {
     "title": "Projekt",
     "back": "Tillbaka till lista"
+  },
+  "profile": {
+    "title": "Profil",
+    "role": "Arkitekt",
+    "intro": "Arkitekt baserad i Sverige, med fokus på ljus, material och hållbarhet.",
+    "bio": [
+      "Designar bostäder, paviljonger och offentliga rum med naturligt ljus.",
+      "Processen är materialdriven: trä, glas och sten i balans."
+    ],
+    "photoAlt": "Porträttfoto av arkitekten"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "intro": "Tveka inte att höra av dig för frågor, samarbeten eller projektförfrågningar.",
+    "name": "Namn",
+    "titleLabel": "Titel",
+    "tel": "Telefon",
+    "email": "E-post",
+    "message": "Meddelande",
+    "send": "Skicka meddelande",
+    "sending": "Skickar…",
+    "ph": {
+      "name": "Ditt namn",
+      "title": "Valfri titel",
+      "tel": "Ditt telefonnummer",
+      "email": "din@mail.se",
+      "message": "Skriv ditt meddelande här…"
+    }
   }
 }

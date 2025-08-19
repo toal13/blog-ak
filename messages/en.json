@@ -7,5 +7,33 @@
   "projects": {
     "title": "Projects",
     "back": "Back to list"
+  },
+  "profile": {
+    "title": "Profile",
+    "role": "Architect",
+    "intro": "Architect based in Sweden, focusing on light, material and sustainability.",
+    "bio": [
+      "Designing homes, pavilions and public spaces with natural light.",
+      "Material-driven approach: wood, glass and stone in balance."
+    ],
+    "photoAlt": "Portrait photo of the architect"
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Feel free to get in touch for inquiries, collaborations, or project requests.",
+    "name": "Name",
+    "titleLabel": "Title",
+    "tel": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "ph": {
+      "name": "Your name",
+      "title": "Optional title",
+      "tel": "Your phone number",
+      "email": "your@email.com",
+      "message": "Write your message here..."
+    }
   }
 }

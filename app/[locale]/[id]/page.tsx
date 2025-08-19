@@ -29,7 +29,7 @@ export default async function ProjectDetailPage(props: {
             alt={`${project.title} image ${i + 1}`}
             width={800}
             height={600}
-            className="rounded-lg object-cover"
+            className="object-cover"
           />
         ))}
       </div>

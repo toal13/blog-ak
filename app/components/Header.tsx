@@ -10,7 +10,11 @@ export default async function Header({
   const t = await getTranslations({ locale, namespace: "nav" });
 
   const Item = ({ href, label }: { href: string; label: string }) => (
-    <Link href={href} className="px-2 py-1 text-sm hover:underline">
+    <Link
+      href={`/${locale}${href}`}
+      locale={locale}
+      className="px-2 py-1 text-sm hover:underline"
+    >
       {label}
     </Link>
   );
@@ -21,6 +25,7 @@ export default async function Header({
         {/* 左：ロゴ */}
         <Link
           href="/"
+          locale={locale}
           className="font-bold tracking-wide text-[color:var(--beige-deep)]"
         >
           Logo
