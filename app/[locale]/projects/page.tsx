@@ -1,20 +1,17 @@
-import { getTranslations } from "next-intl/server";
-import ProjectGrid from "../components/ProjectGrid";
+import ProjectGrid from "@/app/components/ProjectGrid";
 import { mockProjects } from "@/lib/mockProjects";
+import { getTranslations } from "next-intl/server";
 
-export default async function Home(props: {
+export default async function ProjectsIndex(props: {
   params: Promise<{ locale: "sv" | "en" | "ja" }>;
 }) {
   const { locale } = await props.params;
   const t = await getTranslations({ locale, namespace: "projects" });
 
-  // 後で Firestore から取得に差し替え
-  const projects = mockProjects;
-
   return (
     <section className="space-y-6">
       <h1 className="text-2xl font-bold">{t("title")}</h1>
-      <ProjectGrid projects={projects} />
+      <ProjectGrid projects={mockProjects} />
     </section>
   );
 }
