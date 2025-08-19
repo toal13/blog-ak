@@ -1,5 +1,6 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import Header from "../components/Header";
 
 export async function generateStaticParams() {
   return [{ locale: "sv" }, { locale: "en" }, { locale: "ja" }];
@@ -16,7 +17,8 @@ export default async function LocaleLayout(props: {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <Header locale={locale} />
+      <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
     </NextIntlClientProvider>
   );
 }
