@@ -3,5 +3,9 @@
     "projects": "Projekt(SV)",
     "profile": "Profil(SV)",
     "contact": "Kontakt(SV)"
+  },
+  "projects": {
+    "title": "Projekt",
+    "back": "Tillbaka till lista"
   }
 }

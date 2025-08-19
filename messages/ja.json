@@ -3,5 +3,9 @@
     "projects": "プロジェクト(JA)",
     "profile": "プロフィール(JA)",
     "contact": "コンタクト(JA)"
+  },
+  "projects": {
+    "title": "プロジェクト",
+    "back": "一覧に戻る"
   }
 }
