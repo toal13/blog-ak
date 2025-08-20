@@ -8,35 +8,41 @@ export default async function Header({
   locale: "sv" | "en" | "ja";
 }) {
   const t = await getTranslations({ locale, namespace: "nav" });
-
-  const Item = ({ href, label }: { href: string; label: string }) => (
-    <Link
-      href={`/${locale}${href}`}
-      locale={locale}
-      className="px-2 py-1 text-sm hover:underline"
-    >
-      {label}
-    </Link>
-  );
+  const base = `/${locale}`; // ここを基準に
 
   return (
     <header className="w-full sticky top-0 z-50 bg-[color:var(--beige-bg)]/80 backdrop-blur border-b border-[color:var(--beige-base)]">
-      <div className="mx-auto max-w-5xl flex items-center justify-between px-4 py-3">
+      <div className="mx-auto max-w-5xl flex items-center justify-between px-6 py-4">
         {/* 左：ロゴ */}
         <Link
-          href="/"
-          locale={locale}
-          className="font-bold tracking-wide text-[color:var(--beige-deep)]"
+          href={base}
+          className="text-lg font-light tracking-widest text-[color:var(--beige-deep)]"
         >
           Logo
         </Link>
 
         {/* 中：ナビ */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Item href="/projects" label={t("projects")} />
-          <Item href="/profile" label={t("profile")} />
-          <Item href="/contact" label={t("contact")} />
+        <nav className="hidden md:flex items-center gap-12">
+          <Link
+            href={`${base}/projects`}
+            className="text-base font-light tracking-[0.2em] text-neutral-800/90 border-b-2 border-transparent hover:border-neutral-800/60 transition-colors pb-0.5"
+          >
+            {t("projects")}
+          </Link>
+          <Link
+            href={`${base}/profile`}
+            className="text-base font-light tracking-[0.2em] text-neutral-800/90 border-b-2 border-transparent hover:border-neutral-800/60 transition-colors pb-0.5"
+          >
+            {t("profile")}
+          </Link>
+          <Link
+            href={`${base}/contact`}
+            className="text-base font-light tracking-[0.2em] text-neutral-800/90 border-b-2 border-transparent hover:border-neutral-800/60 transition-colors pb-0.5"
+          >
+            {t("contact")}
+          </Link>
         </nav>
+
         <LocaleSwitch />
       </div>
     </header>
