@@ -18,7 +18,9 @@ export default async function LocaleLayout(props: {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <Header locale={locale} />
-      <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+      <main lang={locale} className="mx-auto max-w-5xl px-4 py-8">
+        {children}
+      </main>
     </NextIntlClientProvider>
   );
 }

@@ -45,7 +45,7 @@
 }
 html,
 body {
-  background: var(--beige-bg);
+  background: #ffffff;
 }
 
 @theme {
@@ -149,6 +149,14 @@ body {
 /* 
 ---break--- */
 @layer base {
+  :lang(ja) {
+    font-family: var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  :lang(en),
+  :lang(sv) {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
   * {
     @apply border-border outline-ring/50;
   }

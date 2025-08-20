@@ -8,6 +8,7 @@ export const mockProjects = [
     description:
       "A summer residence designed with large glass façades that merge interior and exterior spaces.",
     images: ["/cover1.jpg", "/sample.jpg", "/sample.jpg", "/sample.jpg"],
+    featured: true,
   },
   {
     id: "p2",
