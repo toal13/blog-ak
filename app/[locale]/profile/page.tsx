@@ -15,13 +15,14 @@ export default async function ProfilePage({
     <main className="px-6 py-12 max-w-5xl mx-auto">
       <div className="grid md:grid-cols-2 gap-10 items-start">
         {/* 左：プロフィール写真 */}
-        <div className="relative w-full aspect-square overflow-hidden rounded-xl shadow border border-gray-200">
+        <div className="relative w-full aspect-square overflow-hidden shadow border border-gray-200">
           <Image
             src="/sample.jpg"
             alt={t("photoAlt")}
             fill
-            className="object-cover"
             priority
+            sizes="(min-width:1024px) 25vw, (min-width:640px) 33vw, 100vw"
+            className="object-cover"
           />
         </div>
 

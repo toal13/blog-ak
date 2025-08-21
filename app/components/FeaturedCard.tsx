@@ -28,6 +28,7 @@ export default function FeaturedCard({ project }: { project: Project }) {
           src={project.cover}
           alt={project.title}
           fill
+          priority
           className="object-cover transition-opacity duration-300 motion-safe:group-hover:opacity-0"
           sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
         />
