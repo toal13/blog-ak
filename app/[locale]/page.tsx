@@ -1,8 +1,8 @@
 import { mockProjects } from "@/lib/mockProjects";
 import FeaturedCard from "../components/FeaturedCard";
 
-export default function HomePage({ params }: { params: { locale: string } }) {
-  const locale = params.locale;
+export default function HomePage() {
+  // const locale = params.locale;
 
   // featured 指定があるものを代表作に
   const featured = mockProjects.find((p) => p.featured);
@@ -24,7 +24,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
 
       {/* 最新4件 */}
       <section className="px-4 md:px-0">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {latestFour.map((p) => (
             <FeaturedCard key={p.id} project={p} />
           ))}

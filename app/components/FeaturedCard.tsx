@@ -19,33 +19,30 @@ export default function FeaturedCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/${locale}/${project.id}`}
-      className="group block overflow-hidden border border-[color:var(--beige-base)] bg-white"
+      className="group block overflow-hidden border-[color:var(--beige-base)] bg-white"
       aria-label={`${project.title} – ${project.location} ${project.year}`}
     >
-      <div className="relative aspect-[16/9] md:aspect-[21/9] bg-white">
-        {/* 画像レイヤー：ホバーでフェードアウト */}
+      {/* 画像（ProjectGridと同一） */}
+      <div className="relative aspect-[4/3] bg-white">
         <Image
           src={project.cover}
           alt={project.title}
           fill
-          priority
-          sizes="100vw"
           className="object-cover transition-opacity duration-300 motion-safe:group-hover:opacity-0"
+          sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
         />
-        {/* タイトルレイヤー：ホバーでフェードイン（白背景） */}
+        {/* ホバー時タイトル（ProjectGridと同一） */}
         <div className="absolute inset-0 grid place-items-center bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="text-center text-[color:var(--beige-deep)] text-xl md:text-3xl font-medium tracking-wide">
+          <span className="text-center text-[color:var(--beige-deep)] text-lg md:text-2xl font-medium tracking-wide">
             {project.title}
           </span>
         </div>
       </div>
 
-      {/* 常時表示：場所＋年代（カード下） */}
-      <div className="mt-3 px-2">
-        <p className="text-sm md:text-base text-neutral-700">
-          {project.location}, {project.year}
-        </p>
-      </div>
+      {/* 下部メタ（ProjectGridと同一） */}
+      <p className="mt-1 text-center text-sm text-foreground">
+        {project.location}, {project.year}
+      </p>
     </Link>
   );
 }
