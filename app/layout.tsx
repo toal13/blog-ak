@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <body
-        className={`${inter.variable} ${karla.variable} ${noto.variable} font-sans antialiased`}
+        className={`${inter.variable} ${karla.variable} ${noto.variable} font-sans antialiased `}
       >
         {children}
       </body>
