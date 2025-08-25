@@ -28,6 +28,16 @@
     "message": "Message",
     "send": "Send Message",
     "sending": "Sending...",
+    "toast": {
+      "success": {
+        "title": "Message sent",
+        "desc": "Please check your Gmail."
+      },
+      "error": {
+        "title": "Failed to send",
+        "desc": "Please try again later."
+      }
+    },
     "ph": {
       "name": "Your name",
       "title": "Optional title",

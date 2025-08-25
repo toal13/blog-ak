@@ -28,6 +28,16 @@
     "message": "Meddelande",
     "send": "Skicka meddelande",
     "sending": "Skickar…",
+    "toast": {
+      "success": {
+        "title": "Meddelandet skickades",
+        "desc": "Kontrollera din Gmail."
+      },
+      "error": {
+        "title": "Misslyckades med att skicka",
+        "desc": "Försök igen senare."
+      }
+    },
     "ph": {
       "name": "Ditt namn",
       "title": "Valfri titel",

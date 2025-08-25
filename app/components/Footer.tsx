@@ -1,8 +1,7 @@
-// app/components/Footer.tsx
 export default function Footer() {
   return (
     <footer className="mt-16 border-t border-[color:var(--beige-base)]">
-      <div className="mx-auto max-w-5xl px-4 py-6">
+      <div className="mx-auto w-full px-4 py-6">
         <p className="text-center text-xs tracking-wide text-muted-foreground">
           © {new Date().getFullYear()} All rights reserved.
         </p>
