@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function ContactPage() {
   const t = useTranslations("contact");
@@ -15,11 +16,36 @@ export default function ContactPage() {
     e.preventDefault();
     setSending(true);
 
-    // ここでAPI呼び出しなどに差し替え
-    // const form = new FormData(e.currentTarget);
-    // await fetch("/api/contact", { method: "POST", body: form });
+    const form = e.currentTarget;
+    const payload = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      tel: (form.elements.namedItem("tel") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      title: (form.elements.namedItem("title") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+      locale: document.documentElement.lang, // sv/en/ja を自動添付
+    };
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("send failed");
 
-    setTimeout(() => setSending(false), 600); // 仮の処理
+      toast.success(t("toast.success.title"), {
+        description: t("toast.success.desc"),
+      });
+
+      form.reset();
+    } catch {
+      toast.error(t("toast.error.title"), {
+        description: t("toast.error.desc"),
+      });
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
