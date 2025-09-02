@@ -1,20 +1,19 @@
-// app/layout.tsx
 import "./globals.css";
-import { Inter, Karla, Noto_Sans_JP } from "next/font/google";
+import { Playfair, Crimson_Pro, Noto_Serif_JP } from "next/font/google";
 
-const inter = Inter({
+const playfair = Playfair({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-playfair",
   display: "swap",
 });
-const karla = Karla({
+const crimson = Crimson_Pro({
   subsets: ["latin"],
-  variable: "--font-karla",
+  variable: "--font-crimson",
   display: "swap",
 });
-const noto = Noto_Sans_JP({
+const noto = Noto_Serif_JP({
   subsets: ["latin"],
-  variable: "--font-noto-sans-jp",
+  variable: "--font-noto-serif-jp",
   display: "swap",
 });
 
@@ -26,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <body
-        className={`${inter.variable} ${karla.variable} ${noto.variable} font-sans antialiased min-h-[100svh] md:min-h-[100dvh] flex flex-col`}
+        className={`${playfair.variable} ${crimson.variable} ${noto.variable} font-sans antialiased min-h-[100svh] md:min-h-[100dvh] flex flex-col`}
       >
         {children}
       </body>

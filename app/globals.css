@@ -49,8 +49,8 @@ body {
 }
 
 @theme {
-  --font-sans: var(--font-inter), var(--font-karla), var(--font-noto-sans-jp),
-    ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-playfair), var(--font-crimson),
+    var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
 }
 /* 
 @theme inline {
@@ -150,12 +150,13 @@ body {
 ---break--- */
 @layer base {
   :lang(ja) {
-    font-family: var(--font-noto-sans-jp), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
   }
 
   :lang(en),
   :lang(sv) {
-    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-playfair), var(--font-crimson),
+      var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
   }
   * {
     @apply border-border outline-ring/50;
