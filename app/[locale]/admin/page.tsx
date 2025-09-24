@@ -18,7 +18,7 @@ import { ForbiddenCard } from "@/app/components/admin/ForbiddenCard";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
 import { PostEditor } from "@/app/components/admin/PostEditor";
 
-const ALLOWED_EMAIL = "tomoyo.tomoyo.m@gmail.com";
+const ALLOWED_EMAIL = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL;
 
 export default function AdminPage() {
   const [user, setUser] = useState<{
