@@ -23,7 +23,7 @@ export function PostList({ items }: { items: Post[] }) {
                 href={`./${p.slug}`}
                 className="truncate font-medium hover:underline"
               >
-                {p.title?.sv ?? p.slug}
+                {p.title ?? p.slug}
               </Link>
               <Badge
                 variant={p.status === "published" ? "default" : "secondary"}
