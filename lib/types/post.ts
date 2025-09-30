@@ -15,32 +15,18 @@ export type LocalizedRich = {
 };
 
 export type Post = {
-  id: string;
-  title: string;
-  slug: string;
-  content: string; // Markdown
-  excerpt?: string;
-  tags?: string[];
-  coverImage?: string;
-  locale: "sv" | "en" | "ja";
-  status: PostStatus;
-  year?: number;
-  createdAt?: Date; // Firestore Timestamp or JS Date
+  id: string; // Firestore document ID
+  slug: string; // URL用
+  title: string; // プロジェクト名
+  location: string; // 場所（例: "Gotland, Sweden"）
+  year: number; // 年（例: 2021）
+  description: string; // 短い説明
+  content?: string; // 詳細な本文（Markdown）
+  coverImage?: string; // カバー画像のURL or Path
+  images?: string[]; // 追加画像のURL or Path配列
+  tags?: string[]; // タグ
+  locale: Locale; // 言語
+  status: PostStatus; // 公開状態
+  createdAt?: Date;
   updatedAt?: Date;
 };
-// export type Post = {
-//   id: string; // = slug
-//   slug: string;
-//   title: LocalizedText; // sv を必須にして軸を作る
-//   description?: LocalizedRich;
-//   content?: LocalizedRich; // Markdown/HTML
-//   year?: number;
-//   place?: string; // 地名は単一文字列でOK（必要なら LocalizedText に）
-//   coverPath?: string;
-//   imagePaths?: string[];
-//   tags?: string[]; // タグを多言語にしたければ {sv,en,ja}[] でもOK
-//   status: PostStatus;
-//   authorId?: string;
-//   createdAt: number; // unix millis（扱いやすい）
-//   updatedAt: number;
-// };
