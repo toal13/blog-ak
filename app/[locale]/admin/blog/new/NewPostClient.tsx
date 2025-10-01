@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { db } from "@/lib/firebase/client";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,9 +38,14 @@ export default function NewPostClient({
     resolver: zodResolver(projectSchema),
     mode: "onChange",
     defaultValues: {
+      slug: "",
+      title: "",
+      location: "",
       year: new Date().getFullYear(),
-      status: "draft",
+      description: "",
+      content: "",
       tags: "",
+      status: "draft",
     },
   });
 
@@ -58,7 +63,7 @@ export default function NewPostClient({
             .filter(Boolean)
         : [];
 
-      const ref = await addDoc(collection(db, "posts"), {
+      await setDoc(doc(db, "posts", data.slug), {
         slug: data.slug,
         title: data.title,
         location: data.location,
@@ -72,7 +77,7 @@ export default function NewPostClient({
         updatedAt: serverTimestamp(),
       });
 
-      toast.success(`Project created: ${ref.id}`);
+      toast.success(`Project created: ${data.slug}`);
       router.push(`/${locale}/admin/blog`);
     } catch (e) {
       console.error("[firestore] error:", e);
@@ -154,7 +159,7 @@ export default function NewPostClient({
               id="year"
               type="number"
               placeholder="2021"
-              {...register("year")}
+              {...register("year", { valueAsNumber: true })}
               aria-invalid={!!errors.year}
             />
             {errors.year && (

@@ -16,11 +16,15 @@ import { Shell } from "@/app/components/admin/Shell";
 import { LoginCard } from "@/app/components/admin/LoginCard";
 import { ForbiddenCard } from "@/app/components/admin/ForbiddenCard";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
-import { PostEditor } from "@/app/components/admin/PostEditor";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 const ALLOWED_EMAIL = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL;
 
 export default function AdminPage() {
+  const params = useParams();
+  const locale = params.locale as string;
+
   const [user, setUser] = useState<{
     uid: string;
     email: string | null;
@@ -35,22 +39,19 @@ export default function AdminPage() {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setLoading(false);
 
-      // 1) ログイン済みかつ許可メールでない → 拒否 & 403維持
       if (u && u.email && u.email !== ALLOWED_EMAIL) {
         setForbidden(true);
-        await signOut(auth); // サインアウトしても forbidden は維持
+        await signOut(auth);
         setUser(null);
         return;
       }
 
-      // 2) 許可メールでログイン → 403解除
       if (u && u.email === ALLOWED_EMAIL) {
         setForbidden(false);
         setUser({ uid: u.uid, email: u.email });
         return;
       }
 
-      // 3) 未ログイン（u=null）：403は変更しない（=拒否直後は403のまま表示）
       setUser(null);
     });
 
@@ -71,7 +72,6 @@ export default function AdminPage() {
 
   const logout = async () => {
     await signOut(auth);
-    // 明示的に403を解除したい場合はここで setForbidden(false) してもOK
   };
 
   if (loading) {
@@ -102,13 +102,29 @@ export default function AdminPage() {
 
   return (
     <Shell>
-      <HeaderBar
-        email={user.email ?? ""}
-        // photoURL={user.photoURL ?? undefined}
-        onSignOut={logout}
-      />
+      <HeaderBar email={user.email ?? ""} onSignOut={logout} />
       <main className="mx-auto max-w-5xl px-4 py-8">
-        <PostEditor />
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Admin Dashboard
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              プロジェクトの管理を行います
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <Link href={`/${locale}/admin/blog`}>
+              <div className="rounded-lg border p-6 hover:bg-accent transition-colors">
+                <h2 className="text-xl font-semibold mb-2">Posts</h2>
+                <p className="text-sm text-muted-foreground">
+                  投稿の一覧・作成・編集
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
       </main>
     </Shell>
   );

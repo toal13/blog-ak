@@ -20,7 +20,7 @@ export type Post = {
   title: string; // プロジェクト名
   location: string; // 場所（例: "Gotland, Sweden"）
   year: number; // 年（例: 2021）
-  description: string; // 短い説明
+  description?: string; // 短い説明（optional に変更）
   content?: string; // 詳細な本文（Markdown）
   coverImage?: string; // カバー画像のURL or Path
   images?: string[]; // 追加画像のURL or Path配列
