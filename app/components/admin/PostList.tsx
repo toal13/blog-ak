@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
 import { Post } from "@/lib/types/post";
 
-export function PostList({ items }: { items: Post[] }) {
+export function PostList({ items, locale }: { items: Post[]; locale: string }) {
   if (!items.length)
     return <p className="text-sm text-neutral-500">No posts yet.</p>;
 
@@ -20,7 +20,7 @@ export function PostList({ items }: { items: Post[] }) {
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <Link
-                href={`./${p.slug}`}
+                href={`/${locale}/admin/blog/${p.slug}`}
                 className="truncate font-medium hover:underline"
               >
                 {p.title ?? p.slug}
@@ -34,7 +34,7 @@ export function PostList({ items }: { items: Post[] }) {
             <p className="text-xs text-neutral-500">/{p.slug}</p>
           </div>
           <div className="flex items-center gap-2">
-            <Link href={`./${p.slug}`}>
+            <Link href={`/${locale}/admin/blog/${p.slug}`}>
               <Button variant="outline" size="sm">
                 Edit
               </Button>

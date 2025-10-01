@@ -72,7 +72,7 @@ export default function AdminBlogList(props: { params: Promise<Params> }) {
           </Link>
         </div>
       </div>
-      <PostList items={posts} />
+      <PostList items={posts} locale={locale} />
     </div>
   );
 }
