@@ -22,8 +22,9 @@ export type Post = {
   year: number; // 年（例: 2021）
   description?: string; // 短い説明（optional に変更）
   content?: string; // 詳細な本文（Markdown）
-  coverImage?: string; // カバー画像のURL or Path
-  images?: string[]; // 追加画像のURL or Path配列
+  coverImage?: string; // カバー画像URL
+  coverImagePath?: string; // Storage パス（削除用）
+  images?: Array<{ url: string; path: string }>;
   tags?: string[]; // タグ
   locale: Locale; // 言語
   status: PostStatus; // 公開状態

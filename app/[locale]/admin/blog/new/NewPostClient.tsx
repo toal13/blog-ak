@@ -20,6 +20,9 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { projectSchema, type ProjectFormData } from "@/lib/validations/post";
 
+import { MultiImageUpload } from "@/app/components/admin/MultiImageUpload";
+import { ImageUpload } from "@/app/components/admin/ImageUpload";
+
 export default function NewPostClient({
   locale,
 }: {
@@ -27,6 +30,11 @@ export default function NewPostClient({
 }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
+  const [coverImageUrl, setCoverImageUrl] = useState("");
+  const [coverImagePath, setCoverImagePath] = useState("");
+  const [additionalImages, setAdditionalImages] = useState<
+    Array<{ url: string; path: string }>
+  >([]);
 
   const {
     register,
@@ -75,6 +83,9 @@ export default function NewPostClient({
         status: data.status,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
+        coverImage: coverImageUrl,
+        coverImagePath: coverImagePath,
+        images: additionalImages,
       });
 
       toast.success(`Project created: ${data.slug}`);
@@ -223,6 +234,27 @@ export default function NewPostClient({
           </p>
         </div>
 
+        {/* Cover Image */}
+        <div className=" space-y-2">
+          <ImageUpload
+            projectSlug={watch("slug") || "temp"}
+            currentImage={coverImageUrl}
+            onImageUploaded={(url, path) => {
+              setCoverImageUrl(url);
+              setCoverImagePath(path);
+            }}
+          />
+        </div>
+
+        {/* Additional Images */}
+        <div className=" space-y-2">
+          <MultiImageUpload
+            projectSlug={watch("slug") || "temp"}
+            currentImages={additionalImages}
+            onImagesChange={setAdditionalImages}
+            maxImages={10}
+          />
+        </div>
         {/* Status */}
         <div className="space-y-2">
           <Label htmlFor="status">

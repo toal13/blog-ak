@@ -20,6 +20,8 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { projectSchema, type ProjectFormData } from "@/lib/validations/post";
 import type { Post } from "@/lib/types/post";
+import { ImageUpload } from "@/app/components/admin/ImageUpload";
+import { MultiImageUpload } from "@/app/components/admin/MultiImageUpload";
 
 type Params = { locale: "sv" | "en" | "ja"; slug: string };
 
@@ -28,6 +30,11 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [coverImageUrl, setCoverImageUrl] = useState("");
+  const [coverImagePath, setCoverImagePath] = useState("");
+  const [additionalImages, setAdditionalImages] = useState<
+    Array<{ url: string; path: string }>
+  >([]);
 
   const {
     register,
@@ -78,6 +85,9 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
           tags: data.tags?.join(", ") || "",
           status: data.status,
         });
+        setCoverImageUrl(data.coverImage || "");
+        setCoverImagePath(data.coverImagePath || "");
+        setAdditionalImages(data.images || []);
       } catch (e) {
         console.error(e);
         toast.error("Failed to load post");
@@ -112,6 +122,9 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
         tags: tagsArray,
         status: data.status,
         updatedAt: serverTimestamp(),
+        coverImage: coverImageUrl,
+        coverImagePath: coverImagePath,
+        images: additionalImages,
       });
 
       toast.success("Project updated!");
