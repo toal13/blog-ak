@@ -3,18 +3,12 @@ export const dynamic = "force-dynamic";
 
 import { use, useEffect, useState } from "react";
 import { db, auth } from "@/lib/firebase/client";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { postConverter } from "@/lib/firebase/converters";
 import type { Post, PostStatus } from "@/lib/types/post";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -32,9 +26,20 @@ type Params = { locale: "sv" | "en" | "ja" };
 export default function AdminBlogList(props: { params: Promise<Params> }) {
   const { locale } = use(props.params);
   const router = useRouter();
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [filter, setFilter] = useState<PostStatus | "all">("all");
+  const searchParams = useSearchParams();
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+
+  // URLのクエリパラメータから初期値を取得
+  const initialStatus = (searchParams.get("status") as PostStatus) || "all";
+  const [filter, setFilter] = useState<PostStatus | "all">(initialStatus);
   const [user, setUser] = useState<{ email: string | null } | null>(null);
+
+  // URLのクエリパラメータが変更されたら、filterを更新
+  useEffect(() => {
+    const status = (searchParams.get("status") as PostStatus) || "all";
+    setFilter(status);
+  }, [searchParams]);
 
   // 認証チェック
   useEffect(() => {
@@ -54,23 +59,50 @@ export default function AdminBlogList(props: { params: Promise<Params> }) {
     router.push(`/${locale}/admin`);
   };
 
+  // フィルター変更ハンドラー
+  const handleFilterChange = (value: PostStatus | "all") => {
+    setFilter(value);
+    // URLを更新
+    if (value === "all") {
+      router.push(`/${locale}/admin/blog`);
+    } else {
+      router.push(`/${locale}/admin/blog?status=${value}`);
+    }
+  };
+
+  // すべての投稿を取得（インデックス不要）
   useEffect(() => {
     const col = collection(db, "posts").withConverter(postConverter);
-    const base = query(col, where("locale", "==", locale));
-    const q =
-      filter === "all"
-        ? query(base, orderBy("updatedAt", "desc"))
-        : query(
-            base,
-            where("status", "==", filter),
-            orderBy("updatedAt", "desc")
-          );
+    const q = query(col);
 
-    const unsub = onSnapshot(q, (snap) =>
-      setPosts(snap.docs.map((d) => d.data()))
-    );
+    const unsub = onSnapshot(q, (snap) => {
+      const posts = snap.docs.map((d) => d.data());
+      setAllPosts(posts);
+    });
+
     return () => unsub();
-  }, [filter, locale]);
+  }, []);
+
+  // クライアント側でフィルタリング・ソート
+  useEffect(() => {
+    let filtered = allPosts
+      // ロケールでフィルタ
+      .filter((post) => post.locale === locale);
+
+    // ステータスでフィルタ
+    if (filter !== "all") {
+      filtered = filtered.filter((post) => post.status === filter);
+    }
+
+    // updatedAt でソート（新しい順）
+    filtered.sort((a, b) => {
+      const aTime = a.updatedAt instanceof Date ? a.updatedAt.getTime() : 0;
+      const bTime = b.updatedAt instanceof Date ? b.updatedAt.getTime() : 0;
+      return bTime - aTime;
+    });
+
+    setFilteredPosts(filtered);
+  }, [allPosts, filter, locale]);
 
   if (!user) {
     return null;
@@ -85,7 +117,7 @@ export default function AdminBlogList(props: { params: Promise<Params> }) {
           <div>
             <h1 className="text-2xl font-bold">All Posts</h1>
             <p className="text-sm text-neutral-600 mt-1">
-              {posts.length} posts in {locale}
+              {filteredPosts.length} posts in {locale}
             </p>
           </div>
           <Link href={`/${locale}/admin/blog/new`}>
@@ -96,10 +128,7 @@ export default function AdminBlogList(props: { params: Promise<Params> }) {
         {/* フィルター */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-neutral-600">Filter:</span>
-          <Select
-            value={filter}
-            onValueChange={(v) => setFilter(v as PostStatus | "all")}
-          >
+          <Select value={filter} onValueChange={handleFilterChange}>
             <SelectTrigger className="w-40">
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
@@ -112,7 +141,7 @@ export default function AdminBlogList(props: { params: Promise<Params> }) {
         </div>
 
         {/* 記事リスト */}
-        <PostList items={posts} locale={locale} />
+        <PostList items={filteredPosts} locale={locale} />
       </main>
     </Shell>
   );

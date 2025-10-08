@@ -82,7 +82,13 @@ export function ImageUpload({
 
       {preview ? (
         <div className="relative aspect-video w-full max-w-md overflow-hidden rounded-lg border">
-          <Image src={preview} alt="Preview" fill className="object-cover" />
+          <Image
+            src={preview}
+            alt="Preview"
+            fill
+            sizes="(max-width: 768px) 100vw, 448px"
+            className="object-cover"
+          />
           <Button
             type="button"
             variant="destructive"
