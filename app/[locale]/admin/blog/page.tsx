@@ -8,7 +8,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { postConverter } from "@/lib/firebase/converters";
 import type { Post, PostStatus } from "@/lib/types/post";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -22,22 +22,26 @@ import { Shell } from "@/app/components/admin/Shell";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
 
 type Params = { locale: "sv" | "en" | "ja" };
+type SearchParams = { status?: string };
 
-export default function AdminBlogList(props: { params: Promise<Params> }) {
+export default function AdminBlogList(props: {
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
+}) {
   const { locale } = use(props.params);
+  const searchParams = use(props.searchParams);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   // URLのクエリパラメータから初期値を取得
-  const initialStatus = (searchParams.get("status") as PostStatus) || "all";
+  const initialStatus = (searchParams.status as PostStatus) || "all";
   const [filter, setFilter] = useState<PostStatus | "all">(initialStatus);
   const [user, setUser] = useState<{ email: string | null } | null>(null);
 
   // URLのクエリパラメータが変更されたら、filterを更新
   useEffect(() => {
-    const status = (searchParams.get("status") as PostStatus) || "all";
+    const status = (searchParams.status as PostStatus) || "all";
     setFilter(status);
   }, [searchParams]);
 
