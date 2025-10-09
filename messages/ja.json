@@ -1,8 +1,8 @@
 {
   "nav": {
-    "projects": "プロジェクト(JA)",
-    "profile": "プロフィール(JA)",
-    "contact": "コンタクト(JA)"
+    "projects": "プロジェクト",
+    "profile": "プロフィール",
+    "contact": "コンタクト"
   },
   "projects": {
     "title": "プロジェクト",

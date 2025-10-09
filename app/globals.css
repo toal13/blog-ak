@@ -1,48 +1,49 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-/* 
----break--- */
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --beige-bg: #faf9f6;
-  --beige-base: #eadbc8;
-  --beige-accent: #d2b48c;
-  --beige-deep: #b58863;
+  /* 白黒カラースキーム */
+  --beige-bg: #ffffff;
+  --beige-base: #e5e5e5;
+  --beige-accent: #cccccc;
+  --beige-deep: #000000;
+
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
+  --background: oklch(1 0 0); /* 白 */
+  --foreground: oklch(0 0 0); /* 黒 */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
+  --card-foreground: oklch(0 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
+  --popover-foreground: oklch(0 0 0);
+  --primary: oklch(0 0 0); /* 黒 */
+  --primary-foreground: oklch(1 0 0); /* 白 */
+  --secondary: oklch(0.97 0 0); /* ライトグレー */
+  --secondary-foreground: oklch(0 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.4 0 0);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --border: var(--beige-base);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(0.709 0.01 56.259);
+  --border: oklch(0.9 0 0); /* #e5e5e5 相当 */
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.7 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.001 106.423);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.97 0.001 106.424);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0 0 0);
+  --sidebar-primary: oklch(0 0 0);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0 0 0);
+  --sidebar-border: oklch(0.9 0 0);
+  --sidebar-ring: oklch(0.7 0 0);
 }
+
 html,
 body {
   background: #ffffff;
@@ -52,28 +53,7 @@ body {
   --font-sans: var(--font-playfair), var(--font-crimson),
     var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
 }
-/* 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-} */
-/* 
----break--- */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -111,8 +91,7 @@ body {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
-/* 
----break--- */
+
 .dark {
   --background: oklch(0.147 0.004 49.25);
   --foreground: oklch(0.985 0.001 106.423);
@@ -146,21 +125,52 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
-/* 
----break--- */
+
 @layer base {
+  /* 日本語：Noto Serif JP */
   :lang(ja) {
     font-family: var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 300; /* Light - デフォルト */
   }
 
+  :lang(ja) h1,
+  :lang(ja) h2,
+  :lang(ja) h3,
+  :lang(ja) h4,
+  :lang(ja) h5,
+  :lang(ja) h6 {
+    font-weight: 400; /* Regular - 見出し */
+  }
+
+  /* 英語・スウェーデン語：Playfair Display (見出し) + Crimson Pro (本文) */
   :lang(en),
   :lang(sv) {
-    font-family: var(--font-playfair), var(--font-crimson),
-      var(--font-noto-serif-jp), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-crimson), var(--font-playfair), ui-sans-serif,
+      system-ui, sans-serif;
+    font-weight: 400; /* 本文はCrimson Proのデフォルト */
   }
+
+  :lang(en) h1,
+  :lang(en) h2,
+  :lang(en) h3,
+  :lang(en) h4,
+  :lang(en) h5,
+  :lang(en) h6,
+  :lang(sv) h1,
+  :lang(sv) h2,
+  :lang(sv) h3,
+  :lang(sv) h4,
+  :lang(sv) h5,
+  :lang(sv) h6 {
+    font-family: var(--font-playfair), var(--font-crimson), ui-sans-serif,
+      system-ui, sans-serif;
+    font-weight: 700; /* 見出しはPlayfair Displayの太字 */
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
