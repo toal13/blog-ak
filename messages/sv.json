@@ -1,8 +1,8 @@
 {
   "nav": {
-    "projects": "Projekt(SV)",
-    "profile": "Profil(SV)",
-    "contact": "Kontakt(SV)"
+    "projects": "Projekt",
+    "profile": "Profil",
+    "contact": "Kontakt"
   },
   "projects": {
     "title": "Projekt",

@@ -1,5 +1,5 @@
 // lib/validations/post.ts
-// lib/validations/post.ts
+
 import { z } from "zod";
 
 export const projectSchema = z.object({

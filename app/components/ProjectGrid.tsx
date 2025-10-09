@@ -3,49 +3,51 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+import type { Post } from "@/lib/types/post";
 
-interface Project {
-  id: string;
-  cover: string;
-  title: string;
-  location: string;
-  year: string | number;
-}
-
-export default function ProjectGrid({ projects }: { projects: Project[] }) {
+export default function ProjectGrid({ projects }: { projects: Post[] }) {
   const locale = useLocale();
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-8">
       {projects.map((p) => (
         <Link
-          key={p.id}
-          href={`/${locale}/${p.id}`}
-          className="group block overflow-hidden border-[color:var(--beige-base)] bg-white"
+          key={p.slug}
+          href={`/${locale}/${p.slug}`}
+          className="group block overflow-hidden  bg-white mb-8 break-inside-avoid hover:shadow-lg transition-shadow"
           aria-label={`${p.title} – ${p.location} ${p.year}`}
         >
-          {/* 画像 */}
-          <div className="relative aspect-[4/3] bg-white">
-            <Image
-              src={p.cover}
-              alt={p.title}
-              fill
-              className="object-cover transition-opacity duration-300 motion-safe:group-hover:opacity-0"
-              sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-            />
+          {/* 画像 - Masonryレイアウト */}
+          <div className="relative w-full bg-white overflow-hidden">
+            {p.coverImage ? (
+              <Image
+                src={p.coverImage}
+                alt={p.title}
+                width={800}
+                height={600}
+                className="w-full h-auto"
+                sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
+              />
+            ) : (
+              <div className="aspect-[4/3] bg-neutral-100 flex items-center justify-center">
+                <span className="text-neutral-400">No Image</span>
+              </div>
+            )}
 
-            {/* ホバー時のタイトル（中央表示） */}
-            <div className="absolute inset-0 grid place-items-center bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <span className="text-center text-[color:var(--beige-deep)] text-lg md:text-2xl font-medium tracking-wide">
+            {/* ホバー時のオーバーレイ */}
+            <div className="absolute inset-0 grid place-items-center bg-white/95 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="text-center text-black text-lg md:text-2xl font-medium tracking-wide px-4">
                 {p.title}
               </span>
             </div>
           </div>
 
-          {/* 常時表示（画像の下にシンプルに出す部分） */}
-          <p className="mt-1 text-center text-sm text-foreground">
-            {p.location}, {p.year}
-          </p>
+          {/* 常時表示 */}
+          <div className="p-3 text-center border-t border-gray-200">
+            <p className="text-sm text-black">
+              {p.location}, {p.year}
+            </p>
+          </div>
         </Link>
       ))}
     </div>

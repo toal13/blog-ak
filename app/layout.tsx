@@ -1,7 +1,8 @@
 import "./globals.css";
-import { Playfair, Crimson_Pro, Noto_Serif_JP } from "next/font/google";
+import { Playfair_Display, Crimson_Pro, Noto_Serif_JP } from "next/font/google";
+import type { Metadata } from "next";
 
-const playfair = Playfair({
+const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
   display: "swap",
@@ -16,6 +17,15 @@ const noto = Noto_Serif_JP({
   variable: "--font-noto-serif-jp",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  title: "Anna Kawa Arkitekt",
+  description: "Architecture Portfolio",
+  icons: {
+    icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: "image/png" }],
+    apple: "/apple-icon.png",
+  },
+};
 
 export default function RootLayout({
   children,

@@ -2,80 +2,42 @@
 import type {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
+  Timestamp,
 } from "firebase/firestore";
 import type { Post } from "@/lib/types/post";
 
 export const postConverter: FirestoreDataConverter<Post> = {
   toFirestore(post) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...rest } = post;
     return rest;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Post {
-    const data = snapshot.data() as Omit<Post, "id">;
-    return { id: snapshot.id, ...data };
+    const data = snapshot.data();
+
+    return {
+      id: snapshot.id,
+      slug: data.slug,
+      title: data.title,
+      location: data.location,
+      year: data.year,
+      description: data.description,
+      content: data.content,
+      coverImage: data.coverImage,
+      coverImagePath: data.coverImagePath,
+      images: data.images || [],
+      tags: data.tags || [],
+      locale: data.locale,
+      status: data.status,
+      // 👇 Timestamp を Date に変換
+      createdAt:
+        data.createdAt instanceof Object && "toDate" in data.createdAt
+          ? (data.createdAt as Timestamp).toDate()
+          : undefined,
+      updatedAt:
+        data.updatedAt instanceof Object && "toDate" in data.updatedAt
+          ? (data.updatedAt as Timestamp).toDate()
+          : undefined,
+    };
   },
 };
-
-// import {
-//   Timestamp, // ★ 追加（値として）
-//   type FirestoreDataConverter,
-//   type QueryDocumentSnapshot,
-//   type SnapshotOptions,
-//   type DocumentData,
-// } from "firebase/firestore";
-// import type { Post } from "@/lib/types/post";
-
-// type RawPost = Partial<Post> & {
-//   createdAt?: number | { toMillis(): number };
-//   updatedAt?: number | { toMillis(): number };
-// };
-
-// // toMillis を持つオブジェクトかどうかの型ガード
-// function hasToMillis(x: unknown): x is { toMillis: () => number } {
-//   return (
-//     typeof x === "object" &&
-//     x !== null &&
-//     "toMillis" in x &&
-//     typeof (x as { toMillis: unknown }).toMillis === "function"
-//   );
-// }
-
-// // any を使わないミリ秒変換
-// const toMillis = (v: unknown): number => {
-//   if (typeof v === "number") return v;
-//   if (v instanceof Timestamp) return v.toMillis();
-//   if (hasToMillis(v)) return v.toMillis();
-//   return 0;
-// };
-
-// export const postConverter: FirestoreDataConverter<Post> = {
-//   toFirestore(post: Post): DocumentData {
-//     // Firestoreのフィールドとしては id を含めない
-//     const { ...out } = post;
-//     return out as DocumentData;
-//   },
-//   fromFirestore(snap: QueryDocumentSnapshot, options: SnapshotOptions): Post {
-//     const data = snap.data(options) as RawPost;
-
-//     return {
-//       id: data.id ?? snap.id,
-//       slug: data.slug ?? snap.id,
-//       title: {
-//         sv: data.title?.sv ?? snap.id,
-//         en: data.title?.en,
-//         ja: data.title?.ja,
-//       },
-//       description: data.description,
-//       content: data.content,
-//       year: data.year,
-//       place: data.place,
-//       coverPath: data.coverPath,
-//       imagePaths: data.imagePaths,
-//       tags: data.tags,
-//       status: data.status ?? "draft",
-//       authorId: data.authorId,
-//       createdAt: toMillis(data.createdAt),
-//       updatedAt: toMillis(data.updatedAt),
-//     };
-//   },
-// };
