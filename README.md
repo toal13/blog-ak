@@ -202,3 +202,61 @@ lib/
 ---
 
 **💡 This project demonstrates:** Modern web development, full-stack capabilities, cloud architecture, responsive design, and production-ready code quality.
+
+---
+
+## <a name="japanese-version"></a>🇯🇵 日本語版
+
+<details>
+<summary>クリックして日本語のREADMEを表示</summary>
+
+# Anna Kawa Arkitekt - ポートフォリオサイト
+
+プロジェクト管理、多言語対応、動的タグフィルタリングを備えたフルスタック建築ポートフォリオサイト。
+
+[English Version](./README.md) | [🌐 デモサイト](https://blog-ak.vercel.app/ja)
+
+![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Firebase](https://img.shields.io/badge/Firebase-11.0-orange)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC)
+
+## 🌐 デモサイト
+
+**公開 URL:** [https://blog-ak.vercel.app/ja](https://blog-ak.vercel.app/ja)
+
+## 🎯 プロジェクト概要
+
+建築家 Anna Kawa のための、モダンでミニマルなポートフォリオサイト。以下の特徴があります：
+
+- コーディング不要の**管理画面**
+- **多言語対応**（日本語・英語・スウェーデン語）
+- **タグフィルタリング**による動的なプロジェクト分類
+- モバイルファーストの**レスポンシブデザイン**
+- **画像の自動最適化**とクラウドストレージ
+
+## ✨ 主な機能
+
+### フロントエンド
+
+- 🌍 **多言語対応** – next-intl を用いたスムーズな言語切り替え
+- 📱 **レスポンシブデザイン** – すべてのデバイスに最適化
+- 🏷️ **タグフィルタリング** – プロジェクトを動的に分類
+- 🖼️ **Masonry レイアウト** – Pinterest 風ギャラリー
+- ⚡ **高パフォーマンス** – Next.js App Router + Server Components
+- 🎨 **ミニマル UI** – シンプルで洗練されたデザイン
+
+### バックエンド・管理画面
+
+- 🔐 **認証機能** – Firebase Auth（メール／Google ログイン）
+- 📝 **コンテンツ管理** – プロジェクトの CRUD 操作
+- 🖼️ **画像管理** – Firebase Storage へのドラッグ＆ドロップアップロード
+- 💾 **データベース** – Firestore NoSQL
+- 🗑️ **カスケード削除** – プロジェクト削除時に画像も自動削除
+- 📊 **ダッシュボード** – リアルタイム統計
+
+</details>
+
+---
+
+**💡 Tip:** 日本語全文は別ファイルでも閲覧できます → [📄 README.ja.md](./README.ja.md)
