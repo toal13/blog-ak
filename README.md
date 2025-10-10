@@ -141,7 +141,7 @@ A modern, minimalist portfolio website for architect Anna Kawa, featuring:
 
 ## 🚀 Quick Start
 
-````bash
+```bash
 # Clone repository
 git clone https://github.com/your-username/anna-kawa-portfolio.git
 cd anna-kawa-portfolio
@@ -151,17 +151,18 @@ npm install
 
 # Setup environment variables
 cp .env.example .env.local
-# Add your Firebase credentials
+# Add your Firebase credentials to .env.local
 
 # Run development server
 npm run dev
+```
 
-Open http://localhost:3000
-
+Open [http://localhost:3000](http://localhost:3000)
 
 ## 🔧 Configuration
 
 Create `.env.local` with your Firebase credentials:
+
 ```env
 NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
@@ -170,27 +171,34 @@ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL=admin@example.com
-````
+```
 
 ## 📊 Project Structure
 
 ```
 app/
-├── [locale]/          # Multilingual routes
-│   ├── page.tsx       # Home page
-│   ├── projects/      # Projects with filters
-│   ├── [slug]/        # Project details
-│   └── admin/         # Admin panel
-├── components/        # Reusable components
-├── api/              # API routes
+├── [locale]/              # Multilingual routes
+│   ├── page.tsx           # Home page
+│   ├── projects/          # Projects with filters
+│   ├── [slug]/            # Project details
+│   └── admin/             # Admin panel
+├── components/            # Reusable components
+└── api/                   # API routes
+
 lib/
-├── firebase/         # Firebase config & utilities
-├── types/            # TypeScript definitions
-└── validations/      # Zod schemas
+├── firebase/              # Firebase config & utilities
+├── types/                 # TypeScript definitions
+└── validations/           # Zod schemas
 ```
 
-👤 Developer
-Tomoyo Alvåg - Full Stack Developer
-Portfolio: https://tomoyo-alvag.vercel.app/en
-GitHub: @toal13
-LinkedIn: https://www.linkedin.com/in/tomoyo-alv%C3%A5g-6b6788219/
+## 👤 Developer
+
+**Tomoyo Alvåg** - Full Stack Developer
+
+- 🌐 Portfolio: [tomoyo-alvag.vercel.app](https://tomoyo-alvag.vercel.app/en)
+- 💼 GitHub: [@toal13](https://github.com/toal13)
+- 🔗 LinkedIn: [tomoyo-alvåg](https://www.linkedin.com/in/tomoyo-alv%C3%A5g-6b678219/)
+
+---
+
+**💡 This project demonstrates:** Modern web development, full-stack capabilities, cloud architecture, responsive design, and production-ready code quality.

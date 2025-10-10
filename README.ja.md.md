@@ -5,7 +5,7 @@
 
 プロジェクト管理、多言語対応、動的タグフィルタリングを備えたフルスタック建築ポートフォリオサイト。
 
-[English Version](./README.md) | [🌐 デモサイト](https://your-site.vercel.app)
+[English Version](./README.md) | [🌐 デモサイト](https://blog-ak.vercel.app/ja)
 
 ![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
@@ -14,7 +14,7 @@
 
 ## 🌐 デモサイト
 
-**公開 URL:** [https://your-site.vercel.app](https://your-site.vercel.app)
+**公開 URL:** [https://blog-ak.vercel.app/ja](https://blog-ak.vercel.app/ja)
 
 ## 🎯 プロジェクト概要
 
@@ -142,24 +142,25 @@
 - リアルタイムダッシュボード統計
 - 下書き/公開ワークフロー
 
-## 🚀 クイックスタート
+## 🚀 Quick Start
 
 ```bash
-# リポジトリのクローン
+# Clone repository
 git clone https://github.com/your-username/anna-kawa-portfolio.git
 cd anna-kawa-portfolio
 
-# 依存関係のインストール
+# Install dependencies
 npm install
 
-# 環境変数の設定
+# Setup environment variables
 cp .env.example .env.local
-# Firebase の認証情報を追加
+# Add your Firebase credentials to .env.local
 
-# 開発サーバー起動
+# Run development server
 npm run dev
 ```
-````
+
+Open [http://localhost:3000](http://localhost:3000)
 
 ## 🔧 Configuration
 
@@ -192,8 +193,15 @@ lib/
 └── validations/      # Zod スキーマ
 ```
 
-👤 Developer
-Tomoyo Alvåg - Full Stack Developer
-Portfolio: https://tomoyo-alvag.vercel.app/en
-GitHub: @toal13
-LinkedIn: https://www.linkedin.com/in/tomoyo-alv%C3%A5g-6b6788219/
+## 👤 Developer
+
+**Tomoyo Alvåg** - Full Stack Developer
+
+- 🌐 Portfolio: [tomoyo-alvag.vercel.app](https://tomoyo-alvag.vercel.app/en)
+- 💼 GitHub: [@toal13](https://github.com/toal13)
+- 🔗 LinkedIn: [tomoyo-alvåg](https://www.linkedin.com/in/tomoyo-alv%C3%A5g-6b678219/)
+
+---
+
+**💡 This project demonstrates:** Modern web development, full-stack capabilities, cloud architecture, responsive design, and production-ready code quality.
+````
