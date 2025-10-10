@@ -12,7 +12,7 @@ import { postConverter } from "@/lib/firebase/converters";
 import type { Post } from "@/lib/types/post";
 
 /**
- * 公開済みのプロジェクトを取得（locale別）
+ * 公開済みのプロジェクトを取得(locale別)
  */
 export async function getPublishedProjects(locale: string): Promise<Post[]> {
   try {
@@ -40,11 +40,17 @@ export async function getPublishedProjects(locale: string): Promise<Post[]> {
 }
 
 /**
- * 特定のslugのプロジェクトを取得
+ * 特定のslugとlocaleのプロジェクトを取得
+ * ドキュメントIDは "{slug}-{locale}" の形式
  */
-export async function getProjectBySlug(slug: string): Promise<Post | null> {
+export async function getProjectBySlug(
+  slug: string,
+  locale: string
+): Promise<Post | null> {
   try {
-    const docRef = doc(db, "posts", slug).withConverter(postConverter);
+    // ドキュメントIDを slug-locale 形式で構築
+    const docId = `${slug}-${locale}`;
+    const docRef = doc(db, "posts", docId).withConverter(postConverter);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
@@ -55,5 +61,24 @@ export async function getProjectBySlug(slug: string): Promise<Post | null> {
   } catch (error) {
     console.error("Failed to fetch project:", error);
     return null;
+  }
+}
+
+/**
+ * オプション: slugだけで全言語のプロジェクトを取得
+ */
+export async function getProjectAllLocales(slug: string): Promise<Post[]> {
+  try {
+    const q = query(
+      collection(db, "posts").withConverter(postConverter),
+      where("slug", "==", slug),
+      where("status", "==", "published")
+    );
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => doc.data());
+  } catch (error) {
+    console.error("Failed to fetch project variants:", error);
+    return [];
   }
 }
