@@ -21,10 +21,6 @@ const noto = Noto_Serif_JP({
 export const metadata: Metadata = {
   title: "Anna Kawa Arkitekt",
   description: "Architecture Portfolio",
-  icons: {
-    icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: "image/png" }],
-    apple: "/apple-icon.png",
-  },
 };
 
 export default function RootLayout({

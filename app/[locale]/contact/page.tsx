@@ -49,24 +49,24 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="container mx-auto py-12 max-w-lg">
+    <div className="container mx-auto py-6 max-w-lg">
       <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
       <p className="text-sm text-muted-foreground mb-8">{t("intro")}</p>
 
       <form className="space-y-4" onSubmit={onSubmit}>
-        <div>
+        <div className="space-y-2">
           <Label htmlFor="name">
             {t("name")} <span className="text-red-500">*</span>
           </Label>
           <Input id="name" name="name" placeholder={t("ph.name")} required />
         </div>
 
-        <div>
+        <div className="space-y-3">
           <Label htmlFor="tel">{t("tel")}</Label>
           <Input id="tel" name="tel" placeholder={t("ph.tel")} />
         </div>
 
-        <div>
+        <div className="space-y-3">
           <Label htmlFor="email">
             {t("email")} <span className="text-red-500">*</span>
           </Label>
@@ -78,12 +78,12 @@ export default function ContactPage() {
             required
           />
         </div>
-        <div>
+        <div className="space-y-3">
           <Label htmlFor="title">{t("titleLabel")}</Label>
           <Input id="title" name="title" placeholder={t("ph.title")} />
         </div>
 
-        <div>
+        <div className="space-y-3">
           <Label htmlFor="message">
             {t("message")} <span className="text-red-500">*</span>
           </Label>
