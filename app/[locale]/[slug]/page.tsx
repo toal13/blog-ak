@@ -9,7 +9,8 @@ export default async function ProjectDetailPage(props: {
 }) {
   const { locale, slug } = await props.params;
 
-  const project = await getProjectBySlug(slug);
+  // 👇 localeを追加
+  const project = await getProjectBySlug(slug, locale);
 
   if (!project) {
     return notFound();

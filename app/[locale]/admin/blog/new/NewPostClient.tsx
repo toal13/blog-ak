@@ -90,8 +90,11 @@ export default function NewPostClient({
             .filter(Boolean)
         : [];
 
-      await setDoc(doc(db, "posts", data.slug), {
-        slug: data.slug,
+      // 👇 ドキュメントIDを slug-locale 形式に変更
+      const docId = `${data.slug}-${locale}`;
+
+      await setDoc(doc(db, "posts", docId), {
+        slug: data.slug, // slugはそのまま保存（言語コードなし）
         title: data.title,
         location: data.location,
         year: data.year,
@@ -107,7 +110,7 @@ export default function NewPostClient({
         images: additionalImages,
       });
 
-      toast.success(`Project created: ${data.slug}`);
+      toast.success(`Project created: ${data.slug} (${locale})`);
       router.push(`/${locale}/admin/blog`);
     } catch (e) {
       console.error("[firestore] error:", e);
@@ -150,6 +153,9 @@ export default function NewPostClient({
                   {String(errors.slug.message)}
                 </p>
               )}
+              <p className="text-xs text-neutral-600">
+                Same slug can be used for all languages (e.g., villa-horizon)
+              </p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="title">
