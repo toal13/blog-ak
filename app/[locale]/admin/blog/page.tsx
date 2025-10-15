@@ -20,6 +20,7 @@ import {
 import { PostList } from "@/app/components/admin/PostList";
 import { Shell } from "@/app/components/admin/Shell";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
+import { useAdminSession } from "@/lib/hooks/useAdminSession";
 
 type Params = { locale: "sv" | "en" | "ja" };
 type SearchParams = { status?: string };
@@ -29,6 +30,7 @@ export default function AdminBlogList(props: {
   searchParams: Promise<SearchParams>;
 }) {
   const { locale } = use(props.params);
+  useAdminSession(locale);
   const searchParams = use(props.searchParams);
   const router = useRouter();
   const [allPosts, setAllPosts] = useState<Post[]>([]);
@@ -116,6 +118,18 @@ export default function AdminBlogList(props: {
     <Shell>
       <HeaderBar onSignOut={logout} />
       <main className="p-6 max-w-3xl mx-auto space-y-6">
+        {/* パンくずリスト */}
+        <nav className="text-sm text-neutral-600 flex items-center gap-2">
+          <Link
+            href={`/${locale}/admin`}
+            className="hover:text-neutral-900 transition-colors"
+          >
+            Dashboard
+          </Link>
+          <span>/</span>
+          <span className="text-neutral-900 font-medium">All Posts</span>
+        </nav>
+
         {/* ヘッダー */}
         <div className="flex items-center justify-between gap-3">
           <div>

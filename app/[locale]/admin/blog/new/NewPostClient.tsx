@@ -24,12 +24,14 @@ import { MultiImageUpload } from "@/app/components/admin/MultiImageUpload";
 import { ImageUpload } from "@/app/components/admin/ImageUpload";
 import { Shell } from "@/app/components/admin/Shell";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
+import { useAdminSession } from "@/lib/hooks/useAdminSession";
 
 export default function NewPostClient({
   locale,
 }: {
   locale: "sv" | "en" | "ja";
 }) {
+  useAdminSession(locale);
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [coverImageUrl, setCoverImageUrl] = useState("");

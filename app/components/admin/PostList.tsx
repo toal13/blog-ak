@@ -39,7 +39,7 @@ export function PostList({ items, locale }: { items: Post[]; locale: string }) {
                 Edit
               </Button>
             </Link>
-            <ConfirmDeleteDialog slug={p.slug} />
+            <ConfirmDeleteDialog slug={p.slug} locale={locale} />
           </div>
         </div>
       ))}

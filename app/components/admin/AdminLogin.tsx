@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type Props = {
   error: string | null;
@@ -28,11 +31,10 @@ export function AdminLogin({
   };
 
   return (
-    <div className="w-full max-w-md space-y-6">
+    <div className="space-y-4">
       <div className="text-center">
-        <h2 className="text-2xl font-bold tracking-tight">Admin Login</h2>
-        <p className="text-muted-foreground mt-2">
-          Googleでサインインしてください（許可済みアカウントのみ）。
+        <p className="text-sm text-muted-foreground">
+          Googleでサインインしてください（許可済みアカウントのみ）
         </p>
       </div>
 
@@ -98,46 +100,37 @@ export function AdminLogin({
       {/* メール/パスワードログイン */}
       {loginMethod === "email" && (
         <form onSubmit={handleEmailSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-2">
-              メールアドレス
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="email">メールアドレス</Label>
+            <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@example.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium mb-2"
-            >
-              パスワード
-            </label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="password">パスワード</Label>
+            <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting || !email || !password}
-            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+            className="w-full"
           >
             {isSubmitting ? "ログイン中..." : "ログイン"}
-          </button>
+          </Button>
         </form>
       )}
 

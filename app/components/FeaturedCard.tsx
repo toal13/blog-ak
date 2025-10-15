@@ -32,19 +32,23 @@ export default function FeaturedCard({ project }: { project: Post }) {
         )}
 
         {/* ホバー時のオーバーレイ */}
-        <div className="absolute inset-0 grid place-items-center bg-white/95 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="text-center text-black text-lg md:text-2xl font-medium tracking-wide px-4">
+        {/* ホバー時のオーバーレイ */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-6">
+          <span className="text-center text-black text-base md:text-xl font-light tracking-wide px-4">
             {project.title}
+          </span>
+          <span className="text-xs md:text-sm text-gray-600 font-light tracking-wide mt-2">
+            {project.location}, {project.year}
           </span>
         </div>
       </div>
 
       {/* 下部メタ */}
-      <div className="p-3 text-center border-t border-gray-200">
+      {/* <div className="p-3 text-center border-t border-gray-200">
         <p className="text-sm text-black">
           {project.location}, {project.year}
         </p>
-      </div>
+      </div> */}
     </Link>
   );
 }

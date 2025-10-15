@@ -74,9 +74,9 @@ export default function ProjectsWithFilter({ projects }: { projects: Post[] }) {
       )}
 
       {/* プロジェクト数を表示 */}
-      <div className="text-center text-xs md:text-sm text-gray-500">
+      {/* <div className="text-center text-xs md:text-sm text-gray-500">
         Showing {filteredProjects.length} of {projects.length} projects
-      </div>
+      </div> */}
     </div>
   );
 }
