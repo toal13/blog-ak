@@ -37,18 +37,14 @@ export default function ProjectGrid({ projects }: { projects: Post[] }) {
             )}
 
             {/* ホバー時のオーバーレイ */}
-            <div className="absolute inset-0 grid place-items-center bg-white/90 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 p-6">
               <span className="text-center text-black text-base md:text-xl font-light tracking-wide px-4">
                 {p.title}
               </span>
+              <span className="text-xs md:text-sm text-gray-600 font-light tracking-wide mt-2">
+                {p.location}, {p.year}
+              </span>
             </div>
-          </div>
-
-          {/* 常時表示 */}
-          <div className="p-3 md:p-4 text-center border-t border-gray-200">
-            <p className="text-xs md:text-sm text-gray-700 font-light tracking-wide">
-              {p.location}, {p.year}
-            </p>
           </div>
         </Link>
       ))}

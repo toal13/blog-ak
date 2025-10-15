@@ -20,7 +20,13 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-export function ConfirmDeleteDialog({ slug }: { slug: string }) {
+export function ConfirmDeleteDialog({
+  slug,
+  locale,
+}: {
+  slug: string;
+  locale: string;
+}) {
   const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
@@ -28,12 +34,17 @@ export function ConfirmDeleteDialog({ slug }: { slug: string }) {
     setDeleting(true);
 
     try {
+      // slug-locale 形式でドキュメントIDを作成
+      const docId = `${slug}-${locale}`;
+      console.log("Deleting post with document ID:", docId);
+
       // 1. 記事データを取得
-      const docRef = doc(db, "posts", slug);
+      const docRef = doc(db, "posts", docId);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
         toast.error("Post not found");
+        console.error("Post not found for document ID:", docId);
         return;
       }
 

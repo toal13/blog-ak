@@ -25,11 +25,13 @@ import { ImageUpload } from "@/app/components/admin/ImageUpload";
 import { MultiImageUpload } from "@/app/components/admin/MultiImageUpload";
 import { Shell } from "@/app/components/admin/Shell";
 import { HeaderBar } from "@/app/components/admin/HeaderBar";
+import { useAdminSession } from "@/lib/hooks/useAdminSession";
 
 type Params = { locale: "sv" | "en" | "ja"; slug: string };
 
 export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
   const { locale, slug } = use(props.params);
+  useAdminSession(locale);
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -39,6 +41,9 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
     Array<{ url: string; path: string }>
   >([]);
   const [user, setUser] = useState<{ email: string | null } | null>(null);
+
+  // 実際のFirestoreドキュメントID（slug-locale形式）
+  const [docId, setDocId] = useState("");
 
   // 認証チェック
   useEffect(() => {
@@ -85,16 +90,24 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const docRef = doc(db, "posts", slug);
+        // slug-locale 形式でドキュメントIDを作成
+        const fullSlug = `${slug}-${locale}`;
+        setDocId(fullSlug);
+
+        console.log("Fetching post with document ID:", fullSlug);
+
+        const docRef = doc(db, "posts", fullSlug);
         const snap = await getDoc(docRef);
 
         if (!snap.exists()) {
+          console.error("Post not found for document ID:", fullSlug);
           toast.error("Post not found");
           router.push(`/${locale}/admin/blog`);
           return;
         }
 
         const data = snap.data() as Post;
+        console.log("Loaded post data:", data);
 
         reset({
           slug: data.slug,
@@ -110,7 +123,7 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
         setCoverImagePath(data.coverImagePath || "");
         setAdditionalImages(data.images || []);
       } catch (e) {
-        console.error(e);
+        console.error("Error fetching post:", e);
         toast.error("Failed to load post");
         router.push(`/${locale}/admin/blog`);
       } finally {
@@ -132,7 +145,8 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
             .filter(Boolean)
         : [];
 
-      const docRef = doc(db, "posts", slug);
+      // 保存時も docId を使用
+      const docRef = doc(db, "posts", docId);
       await updateDoc(docRef, {
         slug: data.slug,
         title: data.title,
@@ -307,7 +321,7 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
           {/* Cover Image */}
           <div className="space-y-2">
             <ImageUpload
-              projectSlug={slug}
+              projectSlug={docId}
               currentImage={coverImageUrl}
               onImageUploaded={(url, path) => {
                 setCoverImageUrl(url);
@@ -319,7 +333,7 @@ export default function AdminBlogEditPage(props: { params: Promise<Params> }) {
           {/* Additional Images */}
           <div className="space-y-2">
             <MultiImageUpload
-              projectSlug={slug}
+              projectSlug={docId}
               currentImages={additionalImages}
               onImagesChange={setAdditionalImages}
               maxImages={10}

@@ -102,7 +102,7 @@ export default function HeaderClient({
         <div className="flex items-center gap-4">
           {/* Instagram アイコン（デスクトップのみ） */}
           <a
-            href="https://www.instagram.com/your_instagram_handle"
+            href="https://www.instagram.com/annakawai_ark/"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:block p-2 hover:bg-gray-100 rounded-full transition-colors"

@@ -22,19 +22,23 @@ export function Shell({
 }: Props) {
   if (variant === "card") {
     return (
-      <div className="min-h-dvh grid place-items-center bg-[var(--beige-bg)]">
-        <Card className="w-[420px]">
-          {title && (
-            <CardHeader>
-              <CardTitle className="tracking-wide">{title}</CardTitle>
-              {description && <CardDescription>{description}</CardDescription>}
-            </CardHeader>
-          )}
-          {children && <CardContent>{children}</CardContent>}
-        </Card>
+      <div className="min-h-screen flex flex-col bg-neutral-50">
+        <div className="flex-1 flex items-center justify-center p-4 pb-32">
+          <Card className="w-full max-w-md">
+            {title && (
+              <CardHeader>
+                <CardTitle className="tracking-wide">{title}</CardTitle>
+                {description && (
+                  <CardDescription>{description}</CardDescription>
+                )}
+              </CardHeader>
+            )}
+            {children && <CardContent>{children}</CardContent>}
+          </Card>
+        </div>
       </div>
     );
   }
 
-  return <div className="min-h-dvh bg-[var(--beige-bg)]">{children}</div>;
+  return <div className="min-h-screen bg-neutral-50">{children}</div>;
 }

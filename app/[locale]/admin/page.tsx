@@ -22,12 +22,15 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { AdminLogin } from "@/app/components/admin/AdminLogin";
 import { FileText, Plus, FileEdit, CheckCircle } from "lucide-react";
+import { useAdminSession } from "@/lib/hooks/useAdminSession"; // 追加
 
 const ALLOWED_EMAIL = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL;
 
 export default function AdminPage() {
   const params = useParams();
   const locale = params.locale as string;
+  // セッション管理を追加
+  useAdminSession(locale);
 
   const [user, setUser] = useState<{
     uid: string;
@@ -135,6 +138,7 @@ export default function AdminPage() {
 
   const logout = async () => {
     await signOut(auth);
+    localStorage.removeItem("adminLastActivity");
   };
 
   if (loading) {
@@ -157,7 +161,7 @@ export default function AdminPage() {
 
   if (!user) {
     return (
-      <Shell variant="card">
+      <Shell variant="card" title="Admin Login">
         <AdminLogin
           error={error}
           onSignInWithGoogle={signInWithGoogle}
@@ -170,17 +174,17 @@ export default function AdminPage() {
   return (
     <Shell>
       <HeaderBar onSignOut={logout} />
-      <main className="p-6 max-w-3xl mx-auto space-y-6">
+      <main className="p-4 sm:p-6 max-w-4xl mx-auto space-y-6">
         {/* ヘッダー */}
         <div>
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">Admin Dashboard</h1>
           <p className="text-sm text-neutral-600 mt-1">
             Manage your blog posts and projects
           </p>
         </div>
 
         {/* 統計カード */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <div className="bg-white border border-neutral-200 rounded-lg p-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 rounded-lg">
@@ -218,33 +222,15 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* メインアクション */}
-        <div className="grid gap-4 sm:grid-cols-2">
-          {/* 記事一覧 */}
-          <Link href={`/${locale}/admin/blog`}>
-            <div className="group bg-white border border-neutral-200 rounded-lg p-6 hover:border-neutral-900 hover:shadow-sm transition-all cursor-pointer h-full">
-              <div className="flex items-start gap-4">
-                <div className="p-2 bg-neutral-100 rounded-lg group-hover:bg-neutral-200 transition-colors">
-                  <FileText className="h-5 w-5 text-neutral-600" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="font-semibold mb-1">All Posts</h2>
-                  <p className="text-sm text-neutral-600">
-                    View, edit, and delete posts
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-
-          {/* 新規作成 */}
+        {/* 新規作成ボタン */}
+        <div>
           <Link href={`/${locale}/admin/blog/new`}>
-            <div className="group bg-neutral-900 rounded-lg p-6 hover:bg-neutral-800 transition-colors cursor-pointer h-full">
+            <div className="group bg-neutral-900 rounded-lg p-5 sm:p-6 hover:bg-neutral-800 transition-colors cursor-pointer">
               <div className="flex items-start gap-4">
-                <div className="p-2 bg-white/10 rounded-lg">
+                <div className="p-2 bg-white/10 rounded-lg flex-shrink-0">
                   <Plus className="h-5 w-5 text-white" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <h2 className="font-semibold text-white mb-1">New Post</h2>
                   <p className="text-sm text-neutral-300">
                     Create a new blog post
@@ -256,18 +242,18 @@ export default function AdminPage() {
         </div>
 
         {/* クイックアクセス */}
-        <div className="pt-6 border-t border-neutral-200 space-y-4">
+        <div className="pt-4 sm:pt-6 border-t border-neutral-200 space-y-4">
           <h2 className="text-sm font-medium text-neutral-500 uppercase tracking-wider">
             Quick Access
           </h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* 下書き */}
             <Link href={`/${locale}/admin/blog?status=draft`}>
               <div className="group bg-amber-50 border border-amber-200 rounded-lg p-4 hover:bg-amber-100 transition-all cursor-pointer">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <FileEdit className="h-5 w-5 text-amber-600" />
-                    <div>
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <FileEdit className="h-5 w-5 text-amber-600 flex-shrink-0" />
+                    <div className="min-w-0">
                       <h3 className="font-semibold text-amber-900">
                         View Drafts
                       </h3>
@@ -277,7 +263,7 @@ export default function AdminPage() {
                     </div>
                   </div>
                   <svg
-                    className="w-5 h-5 text-amber-600 group-hover:translate-x-1 transition-transform"
+                    className="w-5 h-5 text-amber-600 group-hover:translate-x-1 transition-transform flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -297,9 +283,9 @@ export default function AdminPage() {
             <Link href={`/${locale}/admin/blog?status=published`}>
               <div className="group bg-green-50 border border-green-200 rounded-lg p-4 hover:bg-green-100 transition-all cursor-pointer">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-600" />
-                    <div>
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                    <div className="min-w-0">
                       <h3 className="font-semibold text-green-900">
                         Published Posts
                       </h3>
@@ -309,7 +295,7 @@ export default function AdminPage() {
                     </div>
                   </div>
                   <svg
-                    className="w-5 h-5 text-green-600 group-hover:translate-x-1 transition-transform"
+                    className="w-5 h-5 text-green-600 group-hover:translate-x-1 transition-transform flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
