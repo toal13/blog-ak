@@ -30,15 +30,16 @@ export default function HeaderClient({
         {/* 左：ロゴ */}
         <Link
           href={base}
-          className="relative h-10 w-auto transition-opacity hover:opacity-80 flex items-center pb-1"
+          className="relative h-10 w-auto flex items-center pb-1"
           aria-label="Home"
         >
           <Image
-            src="/logo.JPG"
+            src="/logo.png"
             alt="Anna Kawai"
-            width={100}
-            height={35}
-            className="h-4 w-auto object-contain"
+            width={240}
+            height={48}
+            className="h-6 w-auto object-contain hover:opacity-80"
+            quality={100}
             priority
           />
         </Link>

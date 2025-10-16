@@ -29,7 +29,7 @@ export default async function ProfilePage({
         {/* 右：プロフィールテキスト */}
         <div className="space-y-6">
           <header>
-            <h1 className="text-4xl font-bold mb-2">{t("title")}</h1>
+            {/* <h1 className="text-4xl font-bold mb-2">{t("title")}</h1> */}
             <p className="text-xl text-gray-600">{t("role")}</p>
           </header>
 
