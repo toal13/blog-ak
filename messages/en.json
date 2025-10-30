@@ -9,14 +9,16 @@
     "back": "Back to list"
   },
   "profile": {
-    "title": "Profile",
+    "photoAlt": "Anna Kawai - Architect",
     "role": "Architect",
-    "intro": "Architect based in Sweden, focusing on light, material and sustainability.",
+    "intro": "Based in Sweden and Japan. Creating architecture with a focus on light, materials, and sustainability.",
     "bio": [
-      "Designing homes, pavilions and public spaces with natural light.",
-      "Material-driven approach: wood, glass and stone in balance."
-    ],
-    "photoAlt": "Portrait photo of the architect"
+      "I am a Swedish architect working between Gothenburg and Tokyo, specializing in sustainable architecture that harmonizes with nature. My practice focuses on residential, pavilion, and public space projects where natural light and material honesty are central to the design.",
+      "My design philosophy is rooted in the belief that architecture should be a dialogue between the built environment and nature. Through careful site analysis and thoughtful material selection, I create spaces that are both timeless and responsive to contemporary environmental challenges.",
+      "My material-driven process values the harmony of wood, glass, and stone, drawing inspiration from both Nordic minimalism and Japanese spatial philosophy. Each project begins with understanding the unique qualities of place, light, and local materials.",
+      "I received my Master of Architecture from Chalmers University of Technology and am a registered member of the Swedish Association of Architects (SAR/MSA). My work has been recognized with several awards, including the Kasper Salin Prize nomination and the Wood Architecture Prize.",
+      "When not designing, I enjoy hiking in the Swedish wilderness, ceramic art, and teaching design studios."
+    ]
   },
   "contact": {
     "title": "Contact",
