@@ -24,7 +24,10 @@ import { AdminLogin } from "@/app/components/admin/AdminLogin";
 import { FileText, Plus, FileEdit, CheckCircle } from "lucide-react";
 import { useAdminSession } from "@/lib/hooks/useAdminSession"; // 追加
 
-const ALLOWED_EMAIL = process.env.NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL;
+const ALLOWED_EMAILS =
+  process.env.NEXT_PUBLIC_ALLOWED_ADMIN_EMAIL?.split(",").map((email) =>
+    email.trim()
+  ) || [];
 
 export default function AdminPage() {
   const params = useParams();
@@ -53,14 +56,14 @@ export default function AdminPage() {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setLoading(false);
 
-      if (u && u.email && u.email !== ALLOWED_EMAIL) {
+      if (u && u.email && !ALLOWED_EMAILS.includes(u.email)) {
         setForbidden(true);
         await signOut(auth);
         setUser(null);
         return;
       }
 
-      if (u && u.email === ALLOWED_EMAIL) {
+      if (u && u.email && ALLOWED_EMAILS.includes(u.email)) {
         setForbidden(false);
         setUser({ uid: u.uid, email: u.email });
         return;
