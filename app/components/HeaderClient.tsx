@@ -25,7 +25,10 @@ export default function HeaderClient({
   const isActive = (path: string) => pathname.startsWith(path);
 
   return (
-    <header className="w-full sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+    <header
+      className="w-full sticky top-0 z-[100] bg-white border-gray-200"
+      lang={locale}
+    >
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
         {/* 左：ロゴ */}
         <Link
@@ -54,7 +57,7 @@ export default function HeaderClient({
                 : "text-gray-600 hover:text-black"
             }`}
           >
-            {translations.projects}
+            <span lang={locale}>{translations.projects}</span>
             <span
               className={`absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 ${
                 isActive(`${base}/projects`)
@@ -71,7 +74,7 @@ export default function HeaderClient({
                 : "text-gray-600 hover:text-black"
             }`}
           >
-            {translations.profile}
+            <span lang={locale}>{translations.profile}</span>
             <span
               className={`absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 ${
                 isActive(`${base}/profile`)
@@ -88,7 +91,7 @@ export default function HeaderClient({
                 : "text-gray-600 hover:text-black"
             }`}
           >
-            {translations.contact}
+            <span lang={locale}>{translations.contact}</span>
             <span
               className={`absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 ${
                 isActive(`${base}/contact`)
@@ -99,9 +102,8 @@ export default function HeaderClient({
           </Link>
         </nav>
 
-        {/* 右：Instagram + 言語切り替え + モバイルメニュー */}
+        {/* 右：Instagram + 言語切り替え（デスクトップのみ） + モバイルメニュー */}
         <div className="flex items-center gap-4">
-          {/* Instagram アイコン（デスクトップのみ） */}
           <a
             href="https://www.instagram.com/annakawai_ark/"
             target="_blank"
@@ -112,13 +114,14 @@ export default function HeaderClient({
             <Instagram className="w-5 h-5 text-black" />
           </a>
 
-          {/* 区切り線（デスクトップのみ） */}
           <div className="hidden md:block h-6 w-px bg-gray-300" />
 
-          {/* 言語切り替え */}
-          <LocaleSwitch />
+          {/* デスクトップのみ表示 */}
+          <div className="hidden md:block">
+            <LocaleSwitch />
+          </div>
 
-          {/* モバイルメニュー（モバイルのみ） */}
+          {/* モバイルメニュー */}
           <MobileMenu locale={locale} translations={translations} />
         </div>
       </div>
