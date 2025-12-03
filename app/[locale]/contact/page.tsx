@@ -50,7 +50,7 @@ export default function ContactPage() {
 
   return (
     <div className="container mx-auto py-6 max-w-lg">
-      <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
+      {/* <h1 className="text-3xl font-bold mb-6">{t("title")}</h1> */}
       <p className="text-sm text-muted-foreground mb-8">{t("intro")}</p>
 
       <form className="space-y-4" onSubmit={onSubmit}>

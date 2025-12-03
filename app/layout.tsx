@@ -1,5 +1,9 @@
 import "./globals.css";
-import { Playfair_Display, Crimson_Pro, Noto_Serif_JP } from "next/font/google";
+import {
+  Playfair_Display,
+  Crimson_Pro,
+  Zen_Old_Mincho,
+} from "next/font/google";
 import type { Metadata } from "next";
 
 const playfair = Playfair_Display({
@@ -12,9 +16,10 @@ const crimson = Crimson_Pro({
   variable: "--font-crimson",
   display: "swap",
 });
-const noto = Noto_Serif_JP({
+const zen = Zen_Old_Mincho({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-noto-serif-jp",
+  variable: "--font-zen-old-mincho",
   display: "swap",
 });
 
@@ -31,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="sv">
       <body
-        className={`${playfair.variable} ${crimson.variable} ${noto.variable} font-sans antialiased min-h-[100svh] md:min-h-[100dvh] flex flex-col`}
+        className={`${playfair.variable} ${crimson.variable} ${zen.variable} font-sans antialiased min-h-[100svh] md:min-h-[100dvh] flex flex-col`}
       >
         {children}
       </body>
