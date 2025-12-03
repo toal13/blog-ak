@@ -1,11 +1,26 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { Post } from "@/lib/types/post";
 import FeaturedCard from "./FeaturedCard";
+import { ChevronDown } from "lucide-react";
 
 export default function ProjectsWithFilter({ projects }: { projects: Post[] }) {
   const [selectedTag, setSelectedTag] = useState<string>("all");
+  const [showAllTags, setShowAllTags] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 画面サイズを監視
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // すべてのタグを収集（重複なし）
   const allTags = useMemo(() => {
@@ -15,6 +30,13 @@ export default function ProjectsWithFilter({ projects }: { projects: Post[] }) {
     });
     return Array.from(tagSet).sort();
   }, [projects]);
+
+  // 表示するタグの数
+  const MOBILE_VISIBLE_TAGS = 6;
+  const DESKTOP_VISIBLE_TAGS = 9;
+
+  const maxVisibleTags = isMobile ? MOBILE_VISIBLE_TAGS : DESKTOP_VISIBLE_TAGS;
+  const visibleTags = showAllTags ? allTags : allTags.slice(0, maxVisibleTags);
 
   // フィルタリングされたプロジェクト
   const filteredProjects = useMemo(() => {
@@ -27,33 +49,52 @@ export default function ProjectsWithFilter({ projects }: { projects: Post[] }) {
   return (
     <div className="space-y-6 md:space-y-8">
       {/* タグフィルター */}
-      <div className="flex flex-wrap gap-2 md:gap-3 justify-center px-4">
-        {/* All ボタン */}
-        <button
-          onClick={() => setSelectedTag("all")}
-          className={`px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-light tracking-wider transition-all ${
-            selectedTag === "all"
-              ? "bg-black text-white"
-              : "bg-white text-black border border-gray-300 hover:border-black"
-          }`}
-        >
-          All
-        </button>
-
-        {/* タグボタン */}
-        {allTags.map((tag) => (
+      <div className="px-4">
+        <div className="flex flex-wrap gap-2 md:gap-3 justify-center">
+          {/* All ボタン */}
           <button
-            key={tag}
-            onClick={() => setSelectedTag(tag)}
+            onClick={() => setSelectedTag("all")}
             className={`px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-light tracking-wider transition-all ${
-              selectedTag === tag
-                ? "bg-black text-white"
+              selectedTag === "all"
+                ? "bg-white text-black border-2 border-black"
                 : "bg-white text-black border border-gray-300 hover:border-black"
             }`}
           >
-            {tag}
+            All
           </button>
-        ))}
+
+          {/* タグボタン */}
+          {visibleTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
+              className={`px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-light tracking-wider transition-all ${
+                selectedTag === tag
+                  ? "bg-white text-black border-2 border-black"
+                  : "bg-white text-black border border-gray-300 hover:border-black"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        {/* もっと見る/閉じるボタン */}
+        {allTags.length > maxVisibleTags && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setShowAllTags(!showAllTags)}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-light text-gray-600 hover:text-black transition-colors group"
+            >
+              <span>{showAllTags ? "Show less" : "Show more tags"}</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  showAllTags ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* プロジェクト一覧 */}
@@ -72,11 +113,6 @@ export default function ProjectsWithFilter({ projects }: { projects: Post[] }) {
           </p>
         </div>
       )}
-
-      {/* プロジェクト数を表示 */}
-      {/* <div className="text-center text-xs md:text-sm text-gray-500">
-        Showing {filteredProjects.length} of {projects.length} projects
-      </div> */}
     </div>
   );
 }
